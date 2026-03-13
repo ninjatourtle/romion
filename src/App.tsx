@@ -40,20 +40,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-4' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-10 h-10 bg-accent flex items-center justify-center rounded-xl shadow-lg shadow-accent/20 group-hover:rotate-12 transition-transform duration-300">
-            <Settings className="text-white w-6 h-6" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-xl font-black tracking-tighter text-industrial-black">
-              РОМИОН
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.2em] text-accent uppercase">
-              ГРУПП
-            </span>
-          </div>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white shadow-md py-0' : 'bg-white shadow-sm py-0'}`}>
+      <div className="max-w-7xl mx-auto px-3 flex items-center justify-between">
+        <div className="flex items-center group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <img 
+            src="/logo.png" 
+            alt="РОМИОН ГРУПП" 
+            className={`transition-all duration-500 object-contain ${isScrolled ? 'h-12' : 'h-24'}`}
+            referrerPolicy="no-referrer"
+          />
         </div>
 
         {/* Desktop Nav */}
@@ -75,7 +70,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-end">
-              <a href="tel:+78432103630" className="text-sm font-bold text-industrial-black hover:text-accent transition-colors">+7 (843) 210-36-30</a>
+              <a href="tel:+74997118084" className="text-sm font-bold text-industrial-black hover:text-accent transition-colors">+7 (499) 711-80-84</a>
               <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Пн-Пт 9:00 - 18:00</span>
             </div>
             <button className="px-5 py-2.5 bg-industrial-black text-white text-xs font-bold rounded-lg hover:bg-accent transition-all shadow-lg shadow-black/10">
@@ -111,8 +106,8 @@ const Navbar = () => {
             ))}
             <hr className="border-gray-100" />
             <div className="flex flex-col gap-2">
-              <a href="tel:+78432103630" className="text-lg font-bold">+7 (843) 210-36-30</a>
-              <a href="mailto:comdir@proteiros.ru" className="text-sm text-gray-500">comdir@proteiros.ru</a>
+              <a href="tel:+74997118084" className="text-lg font-bold">+7 (499) 711-80-84</a>
+              <a href="mailto:info@romiongroup.ru" className="text-sm text-gray-500">info@romiongroup.ru</a>
             </div>
           </motion.div>
         )}
@@ -123,7 +118,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-white">
+    <section className="relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden bg-white">
       {/* Background Elements */}
       <div className="absolute inset-0 grid-pattern opacity-30" />
       <div className="absolute top-0 right-0 w-1/2 h-full bg-industrial-gray/50 -skew-x-12 translate-x-1/4" />
@@ -137,7 +132,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-accent/5 border border-accent/10 text-accent text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-accent/5 border border-accent/10 text-accent text-[10px] font-black uppercase tracking-[0.2em] mb-8 mt-12">
               <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               Инжиниринг полного цикла
             </div>
@@ -149,17 +144,13 @@ const Hero = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-xl leading-relaxed font-medium">
-              ООО «Ромион Групп» — эксперты в создании уникальных технологических решений: от идеи и ТЗ до запуска готовых линий.
+              ООО "РГ" — эксперты в создании уникальных технологических решений: от идеи и ТЗ до запуска готовых линий.
             </p>
             
             <div className="flex flex-wrap gap-5 mb-16">
               <button className="px-10 py-5 bg-accent text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-industrial-black transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-accent/30 hover:shadow-black/30 group">
                 Обсудить проект
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="px-10 py-5 bg-white text-industrial-black border-2 border-industrial-black/5 font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-gray-50 transition-all duration-300 flex items-center gap-3">
-                <Download className="w-5 h-5" />
-                Презентация
               </button>
             </div>
 
@@ -292,12 +283,48 @@ const Services = () => {
   );
 };
 
-const Cases = () => {
+const Cases = ({ onSelectCase }: { onSelectCase: (c: any) => void }) => {
   const cases = [
-    { title: "Автоматизированная линия упаковки", category: "Пищевая промышленность", img: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format,compress&fit=crop&q=60&w=800&fm=webp" },
-    { title: "Система очистки сточных вод", category: "Экология", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format,compress&fit=crop&q=60&w=800&fm=webp" },
-    { title: "Конвейерная система для склада", category: "Логистика", img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format,compress&fit=crop&q=60&w=800&fm=webp" },
-    { title: "Нестандартный пресс для металла", category: "Машиностроение", img: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format,compress&fit=crop&q=60&w=800&fm=webp" },
+    { 
+      id: 1,
+      title: "Автоматизированная линия упаковки", 
+      category: "Пищевая промышленность", 
+      img: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format,compress&fit=crop&q=60&w=800&fm=webp",
+      problem: "Ускорение процесса упаковки готовой продукции в 3 раза.",
+      solution: "Разработка конвейерной системы с автоматическим весовым дозатором и термоусадочным тоннелем.",
+      results: "Снижение брака на 15%, увеличение производительности на 200%.",
+      specs: ["Производительность: 1200 ед/час", "Энергопотребление: 12 кВт", "Занимаемая площадь: 45 м²"]
+    },
+    { 
+      id: 2,
+      title: "Система очистки сточных вод", 
+      category: "Экология", 
+      img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format,compress&fit=crop&q=60&w=800&fm=webp",
+      problem: "Очистка промышленных стоков до норм ПДК для сброса в городскую сеть.",
+      solution: "Проектирование модульной станции физико-химической очистки с автоматическим контролем параметров.",
+      results: "Полное соответствие экологическим нормам, экономия на штрафах.",
+      specs: ["Объем очистки: 50 м³/сутки", "Степень очистки: 99.8%", "Автоматизация: Полная (SCADA)"]
+    },
+    { 
+      id: 3,
+      title: "Конвейерная система для склада", 
+      category: "Логистика", 
+      img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format,compress&fit=crop&q=60&w=800&fm=webp",
+      problem: "Оптимизация перемещения грузов между 3 этажами склада.",
+      solution: "Вертикальные подъемники и роликовые конвейеры с системой штрих-кодирования.",
+      results: "Сокращение времени обработки заказов на 40%.",
+      specs: ["Грузоподъемность: до 500 кг", "Скорость: 0.5 м/с", "Длина трассы: 120 м"]
+    },
+    { 
+      id: 4,
+      title: "Нестандартный пресс для металла", 
+      category: "Машиностроение", 
+      img: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format,compress&fit=crop&q=60&w=800&fm=webp",
+      problem: "Прессование специфических деталей сложной формы из тугоплавких сплавов.",
+      solution: "Гидравлический пресс с усилием 500 тонн и ЧПУ управлением.",
+      results: "Возможность производства уникальных деталей, ранее закупаемых за рубежом.",
+      specs: ["Усилие: 5000 кН", "Точность позиционирования: 0.01 мм", "Рабочая зона: 1200x1200x800 мм"]
+    },
   ];
 
   return (
@@ -326,6 +353,7 @@ const Cases = () => {
               transition={{ duration: 0.8, delay: i * 0.1 }}
               viewport={{ once: true }}
               className="group cursor-pointer"
+              onClick={() => onSelectCase(c)}
             >
               <div className="relative rounded-[32px] overflow-hidden aspect-[16/10] mb-8 border border-white/5">
                 <img 
@@ -359,6 +387,98 @@ const Cases = () => {
   );
 };
 
+const CaseDetail = ({ caseItem, onClose }: { caseItem: any, onClose: () => void }) => {
+  if (!caseItem) return null;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-industrial-black/95 backdrop-blur-xl overflow-y-auto pt-20 pb-10"
+    >
+      <div className="max-w-5xl mx-auto px-6">
+        <button 
+          onClick={onClose}
+          className="fixed top-8 right-8 w-14 h-14 bg-white/10 hover:bg-accent text-white rounded-full flex items-center justify-center transition-all duration-300 z-[110]"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="text-accent text-xs font-black uppercase tracking-[0.3em] mb-6">{caseItem.category}</div>
+            <h2 className="text-5xl md:text-6xl font-black text-white mb-10 tracking-tighter leading-tight">
+              {caseItem.title}
+            </h2>
+            
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-accent text-[10px] font-black uppercase tracking-widest mb-4">Задача</h3>
+                <p className="text-xl text-gray-300 leading-relaxed font-medium">
+                  {caseItem.problem}
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-accent text-[10px] font-black uppercase tracking-widest mb-4">Решение</h3>
+                <p className="text-lg text-gray-400 leading-relaxed">
+                  {caseItem.solution}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-accent text-[10px] font-black uppercase tracking-widest mb-4">Результат</h3>
+                <div className="p-8 bg-white/5 rounded-3xl border border-white/10">
+                  <p className="text-lg text-white font-bold leading-relaxed">
+                    {caseItem.results}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="space-y-10"
+          >
+            <div className="rounded-[40px] overflow-hidden shadow-2xl border border-white/10">
+              <img 
+                src={caseItem.img} 
+                alt={caseItem.title} 
+                className="w-full h-auto object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+
+            <div className="bg-white/5 p-10 rounded-[40px] border border-white/10">
+              <h3 className="text-white font-bold text-xl mb-6">Технические характеристики</h3>
+              <ul className="space-y-4">
+                {caseItem.specs.map((spec: string, i: number) => (
+                  <li key={i} className="flex items-center gap-4 text-gray-400">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span className="text-sm font-medium">{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button className="w-full py-6 bg-accent text-white font-black uppercase tracking-widest rounded-3xl hover:bg-white hover:text-industrial-black transition-all duration-500 shadow-2xl shadow-accent/20">
+              Хочу такой же проект
+            </button>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Workflow = () => {
   const steps = [
     { title: "Предпроектная работа", desc: "Анализ задачи, выезд на объект, замеры и сбор данных.", icon: <Clock className="w-6 h-6" /> },
@@ -369,7 +489,7 @@ const Workflow = () => {
   ];
 
   return (
-    <section id="workflow" className="py-32 bg-industrial-gray/30">
+    <section id="workflow" className="pt-32 pb-16 bg-industrial-gray/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-12 gap-16 items-start">
           <div className="lg:col-span-4 sticky top-32">
@@ -440,7 +560,7 @@ const Contact = () => {
               </div>
               <div>
                 <div className="text-sm text-gray-500 mb-1">Телефон</div>
-                <a href="tel:+78432103630" className="text-xl font-bold hover:text-accent transition-colors">+7 (843) 210-36-30</a>
+                <a href="tel:+74997118084" className="text-xl font-bold hover:text-accent transition-colors">+7 (499) 711-80-84</a>
               </div>
             </div>
 
@@ -450,29 +570,20 @@ const Contact = () => {
               </div>
               <div>
                 <div className="text-sm text-gray-500 mb-1">Email</div>
-                <a href="mailto:comdir@proteiros.ru" className="text-xl font-bold hover:text-accent transition-colors">comdir@proteiros.ru</a>
+                <a href="mailto:info@romiongroup.ru" className="text-xl font-bold hover:text-accent transition-colors">info@romiongroup.ru</a>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
               <div className="p-3 bg-white rounded-xl shadow-sm">
-                <MapPin className="text-accent w-6 h-6" />
+                <Settings className="text-accent w-6 h-6" />
               </div>
               <div>
-                <div className="text-sm text-gray-500 mb-1">Адрес</div>
-                <div className="text-xl font-bold">119121, г. Москва, Земледельческий пер, д. 11, помещ. 1/2</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 mt-4">
-              <div className="p-3 bg-white rounded-xl shadow-sm">
-                <ShieldCheck className="text-accent w-6 h-6" />
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 mb-1">Реквизиты</div>
-                <div className="text-sm font-medium">
-                  ИНН: 9702012878<br />
-                  ОГРН: 1197746757900<br />
-                  Генеральный директор: Будюгин Р. Н.
+                <div className="text-sm text-gray-500 mb-1">Тендерный отдел</div>
+                <div className="text-lg font-bold">Смирнов Никита Сергеевич</div>
+                <a href="tel:+74997118084,320" className="text-lg font-bold hover:text-accent transition-colors">+7 (499) 711-80-84 (доб. 320)</a>
+                <div className="mt-1">
+                  <a href="mailto:n.smirnov@romion.ru" className="text-sm font-medium text-gray-500 hover:text-accent">n.smirnov@romion.ru</a>
                 </div>
               </div>
             </div>
@@ -508,34 +619,126 @@ const Contact = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ onOpenLegal }: { onOpenLegal: (type: 'privacy' | 'consent' | 'requisites') => void }) => {
   return (
-    <footer className="bg-white border-t border-gray-100 py-12">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-accent flex items-center justify-center rounded-lg">
-            <Settings className="text-white w-5 h-5" />
-          </div>
-          <span className="text-xl font-bold tracking-tighter">РОМИОН ГРУПП</span>
+    <footer className="bg-white border-t border-gray-100 py-16">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="flex items-center">
+          <img 
+            src="/logo.png" 
+            alt="РОМИОН ГРУПП" 
+            className="h-32 object-contain"
+            referrerPolicy="no-referrer"
+          />
         </div>
         
         <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-500">
-          <a href="#" className="hover:text-accent">Политика конфиденциальности</a>
-          <a href="#" className="hover:text-accent">Согласие на обработку данных</a>
-          <a href="#" className="hover:text-accent">Реквизиты</a>
+          <button onClick={() => onOpenLegal('privacy')} className="hover:text-accent transition-colors">Политика конфиденциальности</button>
+          <button onClick={() => onOpenLegal('consent')} className="hover:text-accent transition-colors">Согласие на обработку данных</button>
+          <button onClick={() => onOpenLegal('requisites')} className="hover:text-accent transition-colors">Реквизиты</button>
         </div>
 
         <div className="text-sm text-gray-400">
-          © {new Date().getFullYear()} ООО «Ромион Групп». Все права защищены.
+          © {new Date().getFullYear()} ООО "РГ". Все права защищены.
         </div>
       </div>
     </footer>
   );
 };
 
+const LegalModal = ({ type, onClose }: { type: 'privacy' | 'consent' | 'requisites', onClose: () => void }) => {
+  const content = {
+    privacy: {
+      title: "Политика конфиденциальности",
+      body: `
+        <h3>1. Общие положения</h3>
+        <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных ООО "РГ" (далее — Оператор).</p>
+        <p>Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</p>
+        
+        <h3>2. Основные понятия, используемые в Политике</h3>
+        <p>Персональные данные — любая информация, относящаяся прямо или косвенно к определенному или определяемому Пользователю веб-сайта.</p>
+        <p>Обработка персональных данных — любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными.</p>
+        
+        <h3>3. Оператор может обрабатывать следующие персональные данные Пользователя</h3>
+        <ul>
+          <li>Фамилия, имя, отчество;</li>
+          <li>Номер телефона;</li>
+          <li>Адрес электронной почты.</li>
+        </ul>
+        
+        <h3>4. Цели обработки персональных данных</h3>
+        <p>Цель обработки персональных данных Пользователя — информирование Пользователя посредством отправки электронных писем; предоставление доступа Пользователю к сервисам, информации и/или материалам, содержащимся на веб-сайте; уточнение деталей заказа.</p>
+        
+        <h3>5. Правовые основания обработки персональных данных</h3>
+        <p>Оператор обрабатывает персональные данные Пользователя только в случае их заполнения и/или отправки Пользователем самостоятельно через специальные формы, расположенные на сайте. Заполняя соответствующие формы и/или отправляя свои персональные данные Оператору, Пользователь выражает свое согласие с данной Политикой.</p>
+        
+        <h3>6. Порядок сбора, хранения, передачи и других видов обработки персональных данных</h3>
+        <p>Безопасность персональных данных, которые обрабатываются Оператором, обеспечивается путем реализации правовых, организационных и технических мер, необходимых для выполнения в полном объеме требований действующего законодательства в области защиты персональных данных.</p>
+      `
+    },
+    consent: {
+      title: "Согласие на обработку персональных данных",
+      body: `
+        <p>Пользователь, оставляя заявку на интернет-сайте, принимает настоящее Согласие на обработку персональных данных (далее — Согласие).</p>
+        <p>Действуя свободно, своей волей и в своем интересе, а также подтверждая свою дееспособность, Пользователь дает свое согласие ООО "РГ", которое расположено по адресу: 119121, г. Москва, Земледельческий пер, д. 11, помещ. 1/2, на обработку своих персональных данных со следующими условиями:</p>
+        
+        <ul>
+          <li>Данное Согласие дается на обработку персональных данных, как без использования средств автоматизации, так и с их использованием.</li>
+          <li>Согласие дается на обработку следующих персональных данных: имя, номера контактных телефонов, адреса электронной почты.</li>
+          <li>Цель обработки персональных данных: ответ на запросы Пользователя, предоставление коммерческих предложений, информирование об услугах.</li>
+          <li>Основанием для обработки персональных данных является: Ст. 24 Конституции Российской Федерации; ст.6 Федерального закона №152-ФЗ «О персональных данных».</li>
+        </ul>
+        
+        <p>Персональные данные обрабатываются до отписки физического лица от рекламных и информационных рассылок. Также обработка персональных данных может быть прекращена по запросу субъекта персональных данных.</p>
+      `
+    },
+    requisites: {
+      title: "Реквизиты компании",
+      body: `
+        <p><strong>Полное наименование:</strong> Общество с ограниченной ответственностью "РГ"</p>
+        <p><strong>Сокращенное наименование:</strong> ООО "РГ"</p>
+        <p><strong>ИНН:</strong> 9702012878</p>
+        <p><strong>ОГРН:</strong> 1197746757900</p>
+        <p><strong>Юридический адрес:</strong> 119121, г. Москва, Земледельческий пер, д. 11, помещ. 1/2</p>
+        <p><strong>Генеральный директор:</strong> Будюгин Р. Н.</p>
+      `
+    }
+  };
+
+  const current = content[type];
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-industrial-black/90 backdrop-blur-md flex items-center justify-center p-6"
+    >
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-white rounded-[32px] w-full max-w-3xl max-h-[80vh] overflow-y-auto p-10 relative shadow-2xl"
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <X className="w-6 h-6 text-gray-400" />
+        </button>
+        
+        <h2 className="text-3xl font-black mb-8 tracking-tight text-industrial-black">{current.title}</h2>
+        <div 
+          className="prose prose-sm max-w-none text-gray-600 space-y-4"
+          dangerouslySetInnerHTML={{ __html: current.body }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const Production = () => {
   return (
-    <section id="production" className="py-32 bg-white">
+    <section id="production" className="pt-16 pb-32 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <motion.div
@@ -547,7 +750,7 @@ const Production = () => {
             <div className="text-accent text-xs font-black uppercase tracking-[0.3em] mb-4">О компании</div>
             <h2 className="text-5xl font-black mb-8 tracking-tighter text-industrial-black">Инжиниринг и производство</h2>
             <p className="text-gray-500 mb-10 leading-relaxed text-lg">
-              ООО «Ромион Групп» — это современное предприятие, объединяющее конструкторское бюро и производственные мощности. Мы специализируемся на создании уникального технологического оборудования, которое решает специфические задачи вашего бизнеса.
+              ООО "РГ" — это современное предприятие, объединяющее конструкторское бюро и производственные мощности. Мы специализируемся на создании уникального технологического оборудования, которое решает специфические задачи вашего бизнеса.
             </p>
             
             <div className="grid grid-cols-2 gap-10">
@@ -598,12 +801,12 @@ const Production = () => {
             className="grid grid-cols-2 gap-6"
           >
             <div className="space-y-6">
-              <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Logistics 1" className="rounded-[32px] w-full h-80 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
-              <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Logistics 2" className="rounded-[32px] w-full h-60 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
+              <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Engineering 1" className="rounded-[32px] w-full h-80 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
+              <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Engineering 2" className="rounded-[32px] w-full h-60 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
             </div>
             <div className="space-y-6 pt-12">
-              <img src="https://images.unsplash.com/photo-1566933293069-b55c7f326dd4?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Logistics 3" className="rounded-[32px] w-full h-60 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
-              <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Logistics 4" className="rounded-[32px] w-full h-80 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
+              <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Engineering 3" className="rounded-[32px] w-full h-60 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&fit=crop&q=60&w=600&fm=webp" alt="Engineering 4" className="rounded-[32px] w-full h-80 object-cover shadow-2xl" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
             </div>
           </motion.div>
         </div>
@@ -629,19 +832,39 @@ const CTA = () => {
 };
 
 export default function App() {
+  const [selectedCase, setSelectedCase] = useState<any>(null);
+  const [activeLegalDoc, setActiveLegalDoc] = useState<'privacy' | 'consent' | 'requisites' | null>(null);
+
+  useEffect(() => {
+    if (selectedCase || activeLegalDoc) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [selectedCase, activeLegalDoc]);
+
   return (
     <div className="antialiased selection:bg-accent selection:text-white">
       <Navbar />
       <main>
         <Hero />
         <Services />
-        <Cases />
+        <Cases onSelectCase={setSelectedCase} />
         <Workflow />
         <Production />
         <CTA />
         <Contact />
       </main>
-      <Footer />
+      <Footer onOpenLegal={setActiveLegalDoc} />
+
+      <AnimatePresence>
+        {selectedCase && (
+          <CaseDetail caseItem={selectedCase} onClose={() => setSelectedCase(null)} />
+        )}
+        {activeLegalDoc && (
+          <LegalModal type={activeLegalDoc} onClose={() => setActiveLegalDoc(null)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
