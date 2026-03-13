@@ -21,7 +21,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 // --- Components ---
 
-const Navbar = () => {
+const Navbar = ({ onOpenContact }: { onOpenContact: (title: string) => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -73,7 +73,10 @@ const Navbar = () => {
               <a href="tel:+74997118084" className="text-sm font-bold text-industrial-black hover:text-accent transition-colors">+7 (499) 711-80-84</a>
               <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Пн-Пт 9:00 - 18:00</span>
             </div>
-            <button className="px-5 py-2.5 bg-industrial-black text-white text-xs font-bold rounded-lg hover:bg-accent transition-all shadow-lg shadow-black/10">
+            <button 
+              onClick={() => onOpenContact('Связаться с нами')}
+              className="px-5 py-2.5 bg-industrial-black text-white text-xs font-bold rounded-lg hover:bg-accent transition-all shadow-lg shadow-black/10"
+            >
               Связаться
             </button>
           </div>
@@ -108,6 +111,15 @@ const Navbar = () => {
             <div className="flex flex-col gap-2">
               <a href="tel:+74997118084" className="text-lg font-bold">+7 (499) 711-80-84</a>
               <a href="mailto:info@romiongroup.ru" className="text-sm text-gray-500">info@romiongroup.ru</a>
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenContact('Связаться с нами');
+                }}
+                className="mt-2 w-full py-3 bg-accent text-white font-bold rounded-lg"
+              >
+                Связаться
+              </button>
             </div>
           </motion.div>
         )}
@@ -116,7 +128,7 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => {
+const Hero = ({ onOpenContact }: { onOpenContact: (title: string) => void }) => {
   return (
     <section className="relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden bg-white">
       {/* Background Elements */}
@@ -148,7 +160,10 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-5 mb-16">
-              <button className="px-10 py-5 bg-accent text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-industrial-black transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-accent/30 hover:shadow-black/30 group">
+              <button 
+                onClick={() => onOpenContact('Обсудить проект')}
+                className="px-10 py-5 bg-accent text-white font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-industrial-black transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-accent/30 hover:shadow-black/30 group"
+              >
                 Обсудить проект
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -387,7 +402,7 @@ const Cases = ({ onSelectCase }: { onSelectCase: (c: any) => void }) => {
   );
 };
 
-const CaseDetail = ({ caseItem, onClose }: { caseItem: any, onClose: () => void }) => {
+const CaseDetail = ({ caseItem, onClose, onOpenContact }: { caseItem: any, onClose: () => void, onOpenContact: (title: string) => void }) => {
   if (!caseItem) return null;
 
   return (
@@ -469,7 +484,13 @@ const CaseDetail = ({ caseItem, onClose }: { caseItem: any, onClose: () => void 
               </ul>
             </div>
 
-            <button className="w-full py-6 bg-accent text-white font-black uppercase tracking-widest rounded-3xl hover:bg-white hover:text-industrial-black transition-all duration-500 shadow-2xl shadow-accent/20">
+            <button 
+              onClick={() => {
+                onClose();
+                onOpenContact(`Обсудить проект: ${caseItem.title}`);
+              }}
+              className="w-full py-6 bg-accent text-white font-black uppercase tracking-widest rounded-3xl hover:bg-white hover:text-industrial-black transition-all duration-500 shadow-2xl shadow-accent/20"
+            >
               Хочу такой же проект
             </button>
           </motion.div>
@@ -544,6 +565,13 @@ const Workflow = () => {
 };
 
 const Contact = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
   return (
     <section id="footer" className="py-24 bg-industrial-gray">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
@@ -591,28 +619,44 @@ const Contact = () => {
         </div>
 
         <div className="bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
-          <form className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Имя</label>
-                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Иван Иванов" />
+          {isSubmitted ? (
+            <div className="text-center py-12">
+              <div className="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10" />
+              </div>
+              <h2 className="text-3xl font-black mb-4 tracking-tight text-industrial-black">Заявка отправлена!</h2>
+              <p className="text-gray-500 mb-8">Спасибо за обращение. Наши специалисты свяжутся с вами в ближайшее время.</p>
+              <button 
+                onClick={() => setIsSubmitted(false)}
+                className="px-8 py-3 bg-industrial-black text-white font-bold rounded-xl hover:bg-accent transition-all"
+              >
+                Отправить еще раз
+              </button>
+            </div>
+          ) : (
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Имя</label>
+                  <input required type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Иван Иванов" />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Телефон</label>
+                  <input required type="tel" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="+7 (___) ___-__-__" />
+                </div>
               </div>
               <div>
-                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Телефон</label>
-                <input type="tel" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="+7 (___) ___-__-__" />
+                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Сообщение</label>
+                <textarea rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Опишите вашу задачу..." />
               </div>
-            </div>
-            <div>
-              <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Сообщение</label>
-              <textarea rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Опишите вашу задачу..." />
-            </div>
-            <button className="w-full py-4 bg-accent text-white font-bold rounded-lg hover:bg-accent/90 transition-all shadow-lg shadow-accent/20">
-              Отправить заявку
-            </button>
-            <p className="text-[10px] text-gray-400 text-center">
-              Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности и обработкой персональных данных.
-            </p>
-          </form>
+              <button type="submit" className="w-full py-4 bg-accent text-white font-bold rounded-lg hover:bg-accent/90 transition-all shadow-lg shadow-accent/20">
+                Отправить заявку
+              </button>
+              <p className="text-[10px] text-gray-400 text-center">
+                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности и обработкой персональных данных.
+              </p>
+            </form>
+          )}
         </div>
       </div>
     </section>
@@ -815,7 +859,7 @@ const Production = () => {
   );
 };
 
-const CTA = () => {
+const CTA = ({ onOpenContact }: { onOpenContact: (title: string) => void }) => {
   return (
     <section className="py-16 bg-accent">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
@@ -823,7 +867,10 @@ const CTA = () => {
           <h2 className="text-3xl font-bold mb-2">Нужен расчет стоимости оборудования?</h2>
           <p className="text-white/80">Оставьте заявку, и мы подготовим КП за 5 рабочих дней.</p>
         </div>
-        <button className="px-10 py-4 bg-white text-accent font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl">
+        <button 
+          onClick={() => onOpenContact('Получить коммерческое предложение')}
+          className="px-10 py-4 bg-white text-accent font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl"
+        >
           Получить КП
         </button>
       </div>
@@ -831,38 +878,126 @@ const CTA = () => {
   );
 };
 
+const ContactModal = ({ title, onClose }: { title: string, onClose: () => void }) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[150] bg-industrial-black/90 backdrop-blur-md flex items-center justify-center p-6"
+    >
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-white rounded-[32px] w-full max-w-xl p-10 relative shadow-2xl"
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <X className="w-6 h-6 text-gray-400" />
+        </button>
+        
+        {isSubmitted ? (
+          <div className="text-center py-12">
+            <div className="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-10 h-10" />
+            </div>
+            <h2 className="text-3xl font-black mb-4 tracking-tight text-industrial-black">Заявка отправлена!</h2>
+            <p className="text-gray-500 mb-8">Спасибо за обращение. Наши специалисты свяжутся с вами в ближайшее время.</p>
+            <button 
+              onClick={onClose}
+              className="px-8 py-3 bg-industrial-black text-white font-bold rounded-xl hover:bg-accent transition-all"
+            >
+              Закрыть
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-3xl font-black mb-2 tracking-tight text-industrial-black">{title}</h2>
+            <p className="text-gray-500 mb-8">Заполните форму, и мы свяжемся с вами в ближайшее время.</p>
+            
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Имя</label>
+                <input required type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Иван Иванов" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Телефон</label>
+                <input required type="tel" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="+7 (___) ___-__-__" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-2 uppercase tracking-wider text-gray-400">Сообщение</label>
+                <textarea rows={3} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-accent transition-colors" placeholder="Опишите вашу задачу..." />
+              </div>
+              <button type="submit" className="w-full py-4 bg-accent text-white font-bold rounded-lg hover:bg-accent/90 transition-all shadow-lg shadow-accent/20">
+                Отправить заявку
+              </button>
+              <p className="text-[10px] text-gray-400 text-center">
+                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности и обработкой персональных данных.
+              </p>
+            </form>
+          </>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export default function App() {
   const [selectedCase, setSelectedCase] = useState<any>(null);
   const [activeLegalDoc, setActiveLegalDoc] = useState<'privacy' | 'consent' | 'requisites' | null>(null);
+  const [contactModalData, setContactModalData] = useState<{ isOpen: boolean, title: string }>({ isOpen: false, title: '' });
 
   useEffect(() => {
-    if (selectedCase || activeLegalDoc) {
+    if (selectedCase || activeLegalDoc || contactModalData.isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [selectedCase, activeLegalDoc]);
+  }, [selectedCase, activeLegalDoc, contactModalData.isOpen]);
+
+  const openContactModal = (title: string) => {
+    setContactModalData({ isOpen: true, title });
+  };
 
   return (
     <div className="antialiased selection:bg-accent selection:text-white">
-      <Navbar />
+      <Navbar onOpenContact={openContactModal} />
       <main>
-        <Hero />
+        <Hero onOpenContact={openContactModal} />
         <Services />
         <Cases onSelectCase={setSelectedCase} />
         <Workflow />
         <Production />
-        <CTA />
+        <CTA onOpenContact={openContactModal} />
         <Contact />
       </main>
       <Footer onOpenLegal={setActiveLegalDoc} />
 
       <AnimatePresence>
         {selectedCase && (
-          <CaseDetail caseItem={selectedCase} onClose={() => setSelectedCase(null)} />
+          <CaseDetail 
+            caseItem={selectedCase} 
+            onClose={() => setSelectedCase(null)} 
+            onOpenContact={openContactModal}
+          />
         )}
         {activeLegalDoc && (
           <LegalModal type={activeLegalDoc} onClose={() => setActiveLegalDoc(null)} />
+        )}
+        {contactModalData.isOpen && (
+          <ContactModal 
+            title={contactModalData.title} 
+            onClose={() => setContactModalData({ ...contactModalData, isOpen: false })} 
+          />
         )}
       </AnimatePresence>
     </div>
